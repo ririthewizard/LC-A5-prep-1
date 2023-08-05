@@ -39,6 +39,7 @@ function init() {
 
   // TODO: Code reference objects needed for dynamic functionality
   let header = document.getElementById("header");
+  let coloredText = document.getElementById("colored-text");
   let button = document.getElementById("get-colors");
   let paletteName = document.getElementById("palette-name");
   let colorBlocks = [];
@@ -52,21 +53,34 @@ function init() {
   function changePalette(){
     let randomIndex;
 
+    //Takes a random index of the palettes array and puts it into currentPalette object
     do {
       randomIndex = Math.floor(Math.random() * palettes.length);
       currentPalette = palettes[randomIndex];
     } while (paletteName.innerHTML === currentPalette.name);
     console.log(`Color palette is now ${currentPalette.name}.`);
 
+    //Updates DOM with the selected palette name and then updates each color block with one of the colors from that palette
     paletteName.innerHTML = currentPalette.name;
     for (let i=0; i<5; i++){
       colorBlocks[i].style.backgroundColor = currentPalette.colors[i];
     }
-
+    
+    //Matching header and coloredText with the palette
+    header.style.backgroundColor = currentPalette.colors[0];
+    coloredText.style.color = currentPalette.colors[4];
     
   }
 
   button.addEventListener("click", changePalette);
+
+  button.addEventListener("mouseover", function(){
+    button.style.backgroundColor = currentPalette.colors[4];
+  });
+  button.addEventListener("mouseout", function(){
+    button.style.backgroundColor = "#222";
+  })
+
 
 }
 
