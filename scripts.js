@@ -26,17 +26,47 @@ let palettes = [
 // HT: Hex values for palettes copied, rather efficiently, from https://coolors.co/palettes/trending
 
 // TODO: Establish variable to track current palette
-
+let currentPalette = {"name": "", "colors": [] };
 
 // TODO: Add listener to make sure page elements have completely loaded
-
+window.addEventListener("load", function() {
+  console.log("Page loaded.");
+  init();
+});
 
 // Function handles all basic functionality once page has loaded
 function init() {
 
   // TODO: Code reference objects needed for dynamic functionality
-
+  let header = document.getElementById("header");
+  let button = document.getElementById("get-colors");
+  let paletteName = document.getElementById("palette-name");
+  let colorBlocks = [];
+  let colorCodes = [];
+  for (let i=0; i<5; i++){
+    colorBlocks.push(document.getElementById("color" + i));
+    colorCodes.push(document.getElementById("code" + i));
+  }
 
   // TODO: Code event listeners and functions
+  function changePalette(){
+    let randomIndex;
+
+    do {
+      randomIndex = Math.floor(Math.random() * palettes.length);
+      currentPalette = palettes[randomIndex];
+    } while (paletteName.innerHTML === currentPalette.name);
+    console.log(`Color palette is now ${currentPalette.name}.`);
+
+    paletteName.innerHTML = currentPalette.name;
+    for (let i=0; i<5; i++){
+      colorBlocks[i].style.backgroundColor = currentPalette.colors[i];
+    }
+
+    
+  }
+
+  button.addEventListener("click", changePalette);
+
 }
 
